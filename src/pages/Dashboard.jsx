@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"; // 👈 Ye 2 cheezein add ki
+import { useEffect, useState } from "react"; 
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase/supabase";
 
 function Dashboard() {
     const navigate = useNavigate();
-    const [items, setItems] = useState([]); // 👈 Data save karne ke liye
+    const [items, setItems] = useState([]); 
+    const [complaints, setComplaints] = useState([]); 
 
    
     useEffect(() => {
@@ -16,12 +17,15 @@ function Dashboard() {
     const { data, error } = await supabase
       .from("lost_found_items")
       .select("*")
-      .order("id", { ascending: false }); // Naya item sab se upar
+      .order("id", { ascending: false }); 
+
+        const { data: compData } = await supabase.from("complaints").select("*");
+  setComplaints(compData || []);
 
     if (error) {
       console.error("Error fetching data:", error.message);
     } else {
-      setItems(data); // Tray (state) mein data bhar dia
+      setItems(data); 
     }
   };
 
@@ -47,7 +51,7 @@ function Dashboard() {
                         <div className="card shadow-sm p-3 text-center border-0" style={{ borderTop: '4px solid #66b032' }}>
                             <h4>🔍 Lost & Found</h4>
                             <p>Post items you found or lost.</p>
-                            {/* 👈 Rasta de diya */}
+                           
                             <button className="btn btn-success" onClick={() => navigate("/LostFound")}>
                                 Open Module </button>
                         </div>
@@ -56,7 +60,7 @@ function Dashboard() {
                         <div className="card shadow-sm p-3 text-center border-0" style={{ borderTop: '4px solid #0057a8' }}>
                             <h4>📢 Complaints</h4>
                             <p>Submit campus related issues.</p>
-                            <button className="btn btn-primary">Submit Now</button>
+                            <button className="btn btn-primary" onClick={() => navigate("/Complaints")}>Submit Now</button>
                         </div>
                     </div>
                     <div className="col-md-4">
@@ -68,7 +72,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                {/* 🚀 NEW: Recent Items Table (Yahan dikhega ke kaam kar raha hai ya nahi) */}
+                {/*Items Table */}
                 <div className="mt-5">
                     <h4 className="fw-bold text-saylani-blue" style={{ color: '#0057a8' }}>Recent Lost & Found Posts</h4>
                     <div className="table-responsive bg-white shadow-sm p-3 rounded">
@@ -98,6 +102,38 @@ function Dashboard() {
                         </table>
                     </div>
                 </div>
+
+                {/*  Complaints Table */}
+<div className="mt-5">
+  <h4 className="fw-bold" style={{ color: '#0057a8' }}>Recent Complaints</h4>
+  <div className="table-responsive bg-white shadow-sm p-3 rounded">
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {complaints.length > 0 ? (
+          complaints.map((comp) => (
+            <tr key={comp.id}>
+              <td>{comp.category}</td>
+              <td>{comp.description}</td>
+              <td>
+                <span className="badge bg-info text-dark">{comp.status}</span>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr><td colSpan="3" className="text-center text-muted">Abhi tak koi complaint nahi hai.</td></tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
             </div>
         </div>
     );
