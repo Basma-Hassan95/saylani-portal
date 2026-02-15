@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabase/supabase";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast"; 
 
 function LostFound() {
   const [title, setTitle] = useState("");
@@ -16,7 +17,7 @@ function LostFound() {
 
     if (error) alert(error.message);
     else {
-      alert("Item Posted! ✨");
+      toast.success("Item Posted!")
       navigate("/Dashboard"); // Wapas dashboard pe jao data dekhne
     }
   };

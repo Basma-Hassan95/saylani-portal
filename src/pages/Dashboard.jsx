@@ -28,6 +28,7 @@ function Dashboard() {
 
   // --- Step 2: Realtime aur Initial Fetch (Dabbe ke andar) ---
   useEffect(() => {
+   
     fetchItems(); // Page load pe data lao
 
     const channel = supabase
@@ -36,8 +37,8 @@ function Dashboard() {
         { event: 'INSERT', schema: 'public' }, 
         (payload) => {
           console.log("Naya data aaya:", payload);
-          toast.success("🚀 New Update! Portal par naya data add hua hai.", {
-            duration: 3000,
+          toast.success("Updated", {
+            duration: 7000,
             position: 'top-right',
           });
           fetchItems(); // Counts aur tables refresh karo

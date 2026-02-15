@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabase/supabase";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast"; 
 
 function Volunteers() {
   const [fullName, setFullName] = useState("");
@@ -19,7 +20,7 @@ function Volunteers() {
     if (error) {
       alert("Error: " + error.message);
     } else {
-      alert("Registered as Volunteer! ");
+        toast.success("Registered as Volunteer")
       navigate("/Dashboard");
     }
   };

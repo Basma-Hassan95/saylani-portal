@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabase/supabase";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Complaints() {
   const [category, setCategory] = useState("Internet"); 
@@ -18,7 +19,7 @@ function Complaints() {
     if (error) {
       alert("Error: " + error.message);
     } else {
-      alert("Complaint Submitted Successfully! 📢");
+      toast.success("Complaint Submitted Successfully! 📢");
       navigate("/Dashboard");
     }
   };
