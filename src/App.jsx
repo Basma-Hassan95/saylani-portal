@@ -5,10 +5,12 @@ import Dashboard from "./pages/Dashboard";
 import LostFound from "./pages/LostFound";
 import Complaints from "./pages/Complaints";
 import Volunteers from "./pages/Volunteers";
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
