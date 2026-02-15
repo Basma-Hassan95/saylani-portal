@@ -6,6 +6,8 @@ function Dashboard() {
     const navigate = useNavigate();
     const [items, setItems] = useState([]); 
     const [complaints, setComplaints] = useState([]); 
+    const [volunteers, setVolunteers] = useState([]);
+
 
    
     useEffect(() => {
@@ -21,6 +23,10 @@ function Dashboard() {
 
         const { data: compData } = await supabase.from("complaints").select("*");
   setComplaints(compData || []);
+  
+  const { data: volData } = await supabase.from("volunteers").select("*");
+setVolunteers(volData || []);
+
 
     if (error) {
       console.error("Error fetching data:", error.message);
@@ -67,7 +73,7 @@ function Dashboard() {
                         <div className="card shadow-sm p-3 text-center border-0" style={{ borderTop: '4px solid #66b032' }}>
                             <h4>🤝 Volunteer</h4>
                             <p>Register for campus events.</p>
-                            <button className="btn btn-success">Join Now</button>
+                            <button className="btn btn-success" onClick={() => navigate("/Volunteers")} >Join Now </button>
                         </div>
                     </div>
                 </div>
@@ -133,6 +139,36 @@ function Dashboard() {
     </table>
   </div>
 </div>
+
+{/* Volunteer Table */}
+<div className="mt-5 mb-5">
+  <h4 className="fw-bold" style={{ color: '#66b032' }}>Recent Volunteer Registrations</h4>
+  <div className="table-responsive bg-white shadow-sm p-3 rounded">
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Skill</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        {volunteers.length > 0 ? (
+          volunteers.map((vol) => (
+            <tr key={vol.id}>
+              <td>{vol.full_name}</td>
+              <td>{vol.skill}</td>
+              <td>{vol.phone}</td>
+            </tr>
+          ))
+        ) : (
+          <tr><td colSpan="3" className="text-center text-muted">Koi volunteer nahi mila.</td></tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
             </div>
         </div>

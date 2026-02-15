@@ -3,14 +3,14 @@ import { supabase } from "../supabase/supabase";
 import { useNavigate } from "react-router-dom";
 
 function Complaints() {
-  const [category, setCategory] = useState("Internet"); // Default value pehli wali
+  const [category, setCategory] = useState("Internet"); 
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Supabase ki 'complaints' table mein data bhej rahe hain
+   
     const { error } = await supabase
       .from('complaints')
       .insert([{ category, description, status: 'Submitted' }]);
