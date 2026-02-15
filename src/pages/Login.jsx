@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { supabase } from "../supabase/supabase";
+import { useNavigate } from "react-router-dom"; 
 
 function Login() {
+   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +16,9 @@ function Login() {
     if (error) {
       alert(error.message);
     } else {
-      alert("Login success");
+      // alert("Login success");
+
+        navigate("/Dashboard"); 
     }
   };
 
