@@ -6,8 +6,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        {/* Sabse pehle Signup dikhega */}
+        <Route path="/" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        {/* Dashboard abhi baad mein banayenge */}
+        <Route path="/dashboard" element={<div className="p-5 text-center"><h1>Welcome to Saylani Dashboard</h1></div>} />
       </Routes>
     </BrowserRouter>
   );
